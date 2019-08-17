@@ -57,3 +57,5 @@
   > flow: service -> route handler -> nestjs
 
 - Exceptions are thrown at services
+
+### TypeORM

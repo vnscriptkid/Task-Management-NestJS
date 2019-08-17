@@ -7,7 +7,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.PG_USER,
   password: process.env.PG_PASS,
   database: process.env.PG_DB,
-  entities: [__dirname + '/../**/*.entity.ts'],
+  entities: [__dirname + '/../**/*.entity.js'],
   synchronize: true,
   ssl: true,
 };

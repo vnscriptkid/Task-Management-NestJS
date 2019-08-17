@@ -32,3 +32,28 @@
 
 > one shot: @Body(): body
 > multiple shots: @Body('name') name: string, @Body('age') age: number ...
+
+### Pipes
+
+- Process arguments before they are passed into route handlers
+  > data transformation: modify data and pass down
+  > data validation: throw exceptions
+- Can be Async (DB checking operations)
+- Types of pipe:
+  > Built-in: ValidationPipe, ParseIntPipe
+  > Custom: @Injectable, implement PipeTransform, transform(value, metadata)
+- Consume Pipes:
+  > Handler level
+  > Param Level
+  > Global Level
+- Validation Lib: class-validator, class-transformer
+
+### Exception Handling
+
+- Excections thrown if not handled in current scope, would be escalated to higher scopes
+
+  > exceptions thrown at Service level
+  > exception NotFound thrown at findById is escalated to either update or delete (code reuse, modular code)
+  > flow: service -> route handler -> nestjs
+
+- Exceptions are thrown at services

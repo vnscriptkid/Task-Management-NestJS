@@ -6,30 +6,23 @@
   "configurations": [
     {
       "type": "node",
-      "request": "launch",
-      "name": "nodemon",
-      "runtimeExecutable": "nodemon",
-      "program": "${workspaceFolder}/app.js",
-      "restart": true,
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}\\src\\main.ts",
-      "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
-    },
-    {
-      "type": "node",
       "request": "attach",
       "name": "Debug Nest Framework",
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
       "restart": true
+    },
+    {
+      "name": "Debug Jest tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}\\node_modules\\jest\\bin\\jest.js",
+      "args": ["--runInBand", "--no-cache"],
+      "runtimeArgs": ["--inspect-brk"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "console": "integratedTerminal"
     }
   ]
 }

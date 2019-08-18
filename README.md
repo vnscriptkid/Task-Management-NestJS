@@ -74,6 +74,8 @@
     - remove = 2 operations = findById + remove (pros: findById can be reused)
     - delete = 1 operation (using less query to db)
       > DeleteResult { raw: [], affected: 1 }
+- Db Migration
+  - https://github.com/ambroiseRabier/typeorm-nestjs-migration-example
 
 ### Heroku stuff
 
@@ -90,3 +92,7 @@
 - What is the role of ParseIntPipe
   > Validation failed (numeric string is expected)
 - What to put in Repository, what not?
+- signUp user:
+  - First way: findOne({ username }) -> check exists -> save()
+  - Second way: Restrict on db level: QueryFailedError: duplicate key value violates unique constraint "UQ_9b998bada7cff93fcb953b0c37e"
+    > e.code = 23505

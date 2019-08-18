@@ -12,7 +12,7 @@ export class TasksService {
     @InjectRepository(TaskRepository) private taskRepository: TaskRepository,
   ) {}
 
-  async getTaskById(id: number): Promise<TaskEntity> {
+  public async getTaskById(id: number): Promise<TaskEntity> {
     const foundTask = await this.taskRepository.findOne(id);
     if (!foundTask) {
       throw new NotFoundException(`Task with id ${id} not found`);
@@ -23,6 +23,27 @@ export class TasksService {
   async createTask(createTaskDto: CreateTaskDto): Promise<TaskEntity> {
     return this.taskRepository.createTask(createTaskDto);
   }
+
+  async deleteTask(id: number): Promise<void> {
+    // First way
+    // const task = await this.getTaskById(id);
+    // await task.remove();
+
+    // Second way
+    // const result = await this.taskRepository.delete(id);
+    const result = await this.taskRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
+  }
+
+  async updateTaskStatus(id: number, status: TaskStatus): Promise<TaskEntity> {
+    const task = await this.getTaskById(id);
+    task.status = status;
+    await task.save();
+    return task;
+  }
+
   // private tasks: Task[] = [];
   // getAllTasks() {
   //   return this.tasks;

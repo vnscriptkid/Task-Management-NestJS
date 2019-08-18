@@ -68,6 +68,12 @@
   > Custom methods
 - Resources:
   > http://typeorm.delightful.studio
+- Questions:
+  - save() or insert()
+  - remove() or delete()
+    - remove = 2 operations = findById + remove (pros: findById can be reused)
+    - delete = 1 operation (using less query to db)
+      > DeleteResult { raw: [], affected: 1 }
 
 ### Heroku stuff
 
@@ -81,3 +87,5 @@
 
 - value "1566029814429" is out of range for type integer
   > Uncaught error currently, seems like a postgres error, when find by id
+- What is the role of ParseIntPipe
+  > Validation failed (numeric string is expected)

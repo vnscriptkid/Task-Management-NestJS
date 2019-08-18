@@ -4,6 +4,7 @@ import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import {
   ConflictException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { genSalt, hash } from 'bcrypt';
 
@@ -26,6 +27,14 @@ export class UserRepository extends Repository<UserEntity> {
       } else {
         throw new InternalServerErrorException(); // 500
       }
+    }
+  }
+
+  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<void> {
+    const { username, password } = authCredentialsDto;
+    const foundUser = await this.findOne({ username });
+    if (!foundUser || !(await foundUser.isPasswordCorrect(password))) {
+      throw new UnauthorizedException('Invalid credentials');
     }
   }
 }

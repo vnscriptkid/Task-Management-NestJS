@@ -59,3 +59,25 @@
 - Exceptions are thrown at services
 
 ### TypeORM
+
+- Concepts:
+  > Entity: like Model, represent a table, on which we perform operations
+  > Repository: compose complex db logic (using Entity), service will rely on repository and delegate work for it to process
+- Repository:
+  > Built-in methods
+  > Custom methods
+- Resources:
+  > http://typeorm.delightful.studio
+
+### Heroku stuff
+
+- Link to App: https://task-management-nestjs.herokuapp.com/
+- Set up CI
+  > Create heroku app, turn on auto deploy when pushing to Github, if passing CI
+  > Connect travis to Github repo
+  > heroku logs --app task-management-nestjs
+
+### Notes:
+
+- value "1566029814429" is out of range for type integer
+  > Uncaught error currently, seems like a postgres error, when find by id

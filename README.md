@@ -96,3 +96,8 @@
   - First way: findOne({ username }) -> check exists -> save()
   - Second way: Restrict on db level: QueryFailedError: duplicate key value violates unique constraint "UQ_9b998bada7cff93fcb953b0c37e"
     > e.code = 23505
+
+### Authentication
+
+- Register (imports) JwtModule and PassportModule with AuthModule
+- JwtModule internally exports JwtService, so we can inject it into AuthModule for our own sake

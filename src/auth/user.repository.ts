@@ -30,11 +30,12 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<void> {
+  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<string> {
     const { username, password } = authCredentialsDto;
     const foundUser = await this.findOne({ username });
     if (!foundUser || !(await foundUser.isPasswordCorrect(password))) {
       throw new UnauthorizedException('Invalid credentials');
     }
+    return username;
   }
 }

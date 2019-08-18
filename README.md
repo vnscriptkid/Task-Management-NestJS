@@ -89,3 +89,4 @@
   > Uncaught error currently, seems like a postgres error, when find by id
 - What is the role of ParseIntPipe
   > Validation failed (numeric string is expected)
+- What to put in Repository, what not?

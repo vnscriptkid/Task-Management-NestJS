@@ -29,6 +29,14 @@ export class TasksController {
     return this.tasksService.getTaskById(id);
   }
 
+  @Get()
+  @UsePipes(ValidationPipe)
+  getTasks(
+    @Query() getTasksFilterDto: GetTasksFilterDto,
+  ): Promise<TaskEntity[]> {
+    return this.tasksService.getTasks(getTasksFilterDto);
+  }
+
   @Post()
   @UsePipes(ValidationPipe)
   createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskEntity> {
@@ -44,11 +52,11 @@ export class TasksController {
   @UsePipes(ValidationPipe)
   updateTaskStatus(
     @Param('id', ParseIntPipe) id: number,
-    // @Body() updateTaskStatusDto: UpdateTaskStatusDto,
-    @Body('status', TaskStatusValidationPipe) status: TaskStatus,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+    // @Body('status', TaskStatusValidationPipe) status: TaskStatus,
   ): Promise<TaskEntity> {
-    // return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
-    return this.tasksService.updateTaskStatus(id, status);
+    return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
+    // return this.tasksService.updateTaskStatus(id, status);
   }
 
   // @Get()

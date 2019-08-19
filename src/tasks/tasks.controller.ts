@@ -9,18 +9,17 @@ import {
   Query,
   UsePipes,
   ValidationPipe,
-  NotFoundException,
   ParseIntPipe,
   UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { TaskEntity } from './task.entity';
 import { UpdateTaskStatusDto } from './dto/update-task.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from '../auth/get-user.decorator';
+import { UserEntity } from '../auth/user.entity';
 
 @Controller('tasks')
 export class TasksController {
@@ -31,8 +30,8 @@ export class TasksController {
     return this.tasksService.getTaskById(id);
   }
 
-  @UseGuards(AuthGuard())
   @Get()
+  @UseGuards(AuthGuard())
   @UsePipes(ValidationPipe)
   getTasks(
     @Query() getTasksFilterDto?: GetTasksFilterDto,
@@ -41,9 +40,13 @@ export class TasksController {
   }
 
   @Post()
+  @UseGuards(AuthGuard())
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskEntity> {
-    return this.tasksService.createTask(createTaskDto);
+  createTask(
+    @Body() createTaskDto: CreateTaskDto,
+    @GetUser() user: UserEntity,
+  ): Promise<TaskEntity> {
+    return this.tasksService.createTask(createTaskDto, user);
   }
 
   @Delete('/:id')

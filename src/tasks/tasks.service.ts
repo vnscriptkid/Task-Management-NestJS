@@ -48,8 +48,11 @@ export class TasksService {
     return task;
   }
 
-  async getTasks(getTaskFilterDto: GetTasksFilterDto): Promise<TaskEntity[]> {
-    const tasks = await this.taskRepository.getTasks(getTaskFilterDto);
+  async getTasks(
+    getTaskFilterDto: GetTasksFilterDto,
+    user: UserEntity,
+  ): Promise<TaskEntity[]> {
+    const tasks = await this.taskRepository.getTasks(getTaskFilterDto, user);
     return tasks;
   }
 

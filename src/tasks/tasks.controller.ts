@@ -34,9 +34,10 @@ export class TasksController {
   @UseGuards(AuthGuard())
   @UsePipes(ValidationPipe)
   getTasks(
+    @GetUser() user: UserEntity,
     @Query() getTasksFilterDto?: GetTasksFilterDto,
   ): Promise<TaskEntity[]> {
-    return this.tasksService.getTasks(getTasksFilterDto);
+    return this.tasksService.getTasks(getTasksFilterDto, user);
   }
 
   @Post()

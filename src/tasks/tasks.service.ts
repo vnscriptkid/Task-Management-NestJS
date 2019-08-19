@@ -28,25 +28,29 @@ export class TasksService {
     return this.taskRepository.createTask(createTaskDto, user);
   }
 
-  async deleteTask(id: number): Promise<void> {
+  async deleteTask(id: number, userId: number): Promise<void> {
     // First way
     // const task = await this.getTaskById(id);
     // await task.remove();
 
     // Second way
     // const result = await this.taskRepository.delete(id);
-    const result = await this.taskRepository.delete(id);
+    const result = await this.taskRepository.delete({ id, userId });
     if (result.affected === 0) {
       throw new NotFoundException(`Task with id ${id} not found`);
     }
   }
 
-  // async updateTaskStatus(id: number, status: TaskStatus): Promise<TaskEntity> {
-  //   const task = await this.getTaskById(id);
-  //   task.status = status;
-  //   await task.save();
-  //   return task;
-  // }
+  async updateTaskStatus(
+    id: number,
+    status: TaskStatus,
+    userId: number,
+  ): Promise<TaskEntity> {
+    const task = await this.getTaskById(id, userId);
+    task.status = status;
+    await task.save();
+    return task;
+  }
 
   async getTasks(
     getTaskFilterDto: GetTasksFilterDto,
@@ -55,49 +59,4 @@ export class TasksService {
     const tasks = await this.taskRepository.getTasks(getTaskFilterDto, user);
     return tasks;
   }
-
-  // private tasks: Task[] = [];
-  // getAllTasks() {
-  //   return this.tasks;
-  // }
-  // getTasksWithFilters(filter: GetTasksFilterDto) {
-  //   const { status, search } = filter;
-  //   let taskList = this.tasks;
-  //   if (status) {
-  //     taskList = taskList.filter(t => t.status === status);
-  //   }
-  //   if (search) {
-  //     taskList = taskList.filter(
-  //       t => t.title.includes(search) || t.description.includes(search),
-  //     );
-  //   }
-  //   return taskList;
-  // }
-  // getTaskById(id: string): Task {
-  //   const foundTask = this.tasks.find(t => t.id === id);
-  //   if (!foundTask) {
-  //     throw new NotFoundException('Task not found');
-  //   }
-  //   return foundTask;
-  // }
-  // createTask(createTaskDto: CreateTaskDto) {
-  //   const { title, description } = createTaskDto;
-  //   const newTask: Task = {
-  //     id: uuid(),
-  //     title,
-  //     description,
-  //     status: TaskStatus.OPEN,
-  //   };
-  //   this.tasks.push(newTask);
-  //   return newTask;
-  // }
-  // deleteTask(id: string) {
-  //   const task = this.getTaskById(id);
-  //   this.tasks = this.tasks.filter(t => t.id !== task.id);
-  // }
-  // updateTaskStatus(id: string, status: TaskStatus): Task {
-  //   const task = this.getTaskById(id);
-  //   task.status = status;
-  //   return task;
-  // }
 }

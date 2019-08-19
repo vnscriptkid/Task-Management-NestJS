@@ -55,45 +55,28 @@ export class TasksController {
   }
 
   @Delete('/:id')
-  deleteTask(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.tasksService.deleteTask(id);
+  @UseGuards(AuthGuard())
+  deleteTask(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: UserEntity,
+  ): Promise<void> {
+    return this.tasksService.deleteTask(id, user.id);
   }
 
-  // @Patch('/:id/status')
-  // @UsePipes(ValidationPipe)
-  // updateTaskStatus(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() updateTaskStatusDto: UpdateTaskStatusDto,
-  //   // @Body('status', TaskStatusValidationPipe) status: TaskStatus,
-  // ): Promise<TaskEntity> {
-  //   return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
-  //   // return this.tasksService.updateTaskStatus(id, status);
-  // }
-
-  // @Get()
-  // getTasks(@Query(ValidationPipe) filterDto?: GetTasksFilterDto): Task[] {
-  //   if (filterDto && Object.keys(filterDto).length > 0) {
-  //     return this.tasksService.getTasksWithFilters(filterDto);
-  //   }
-  //   return this.tasksService.getAllTasks();
-  // }
-
-  // @Post()
-  // @UsePipes(ValidationPipe)
-  // createTask(@Body() createTaskDto: CreateTaskDto): Task {
-  //   return this.tasksService.createTask(createTaskDto);
-  // }
-
-  // @Delete('/:id')
-  // deleteTaskById(@Param('id') id: string) {
-  //   this.tasksService.deleteTask(id);
-  // }
-
-  // @Patch('/:id')
-  // updateTaskStatus(
-  //   @Param('id') id: string,
-  //   @Body('status', TaskStatusValidationPipe) status: TaskStatus,
-  // ): Task {
-  //   return this.tasksService.updateTaskStatus(id, status);
-  // }
+  @Patch('/:id/status')
+  @UseGuards(AuthGuard())
+  @UsePipes(ValidationPipe)
+  updateTaskStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+    @GetUser() user: UserEntity,
+    // @Body('status', TaskStatusValidationPipe) status: TaskStatus,
+  ): Promise<TaskEntity> {
+    return this.tasksService.updateTaskStatus(
+      id,
+      updateTaskStatusDto.status,
+      user.id,
+    );
+    // return this.tasksService.updateTaskStatus(id, status);
+  }
 }

@@ -13,8 +13,8 @@ export class TasksService {
     @InjectRepository(TaskRepository) private taskRepository: TaskRepository,
   ) {}
 
-  public async getTaskById(id: number): Promise<TaskEntity> {
-    const foundTask = await this.taskRepository.findOne(id);
+  public async getTaskById(id: number, userId: number): Promise<TaskEntity> {
+    const foundTask = await this.taskRepository.findOne({ id, userId });
     if (!foundTask) {
       throw new NotFoundException(`Task with id ${id} not found`);
     }
@@ -41,12 +41,12 @@ export class TasksService {
     }
   }
 
-  async updateTaskStatus(id: number, status: TaskStatus): Promise<TaskEntity> {
-    const task = await this.getTaskById(id);
-    task.status = status;
-    await task.save();
-    return task;
-  }
+  // async updateTaskStatus(id: number, status: TaskStatus): Promise<TaskEntity> {
+  //   const task = await this.getTaskById(id);
+  //   task.status = status;
+  //   await task.save();
+  //   return task;
+  // }
 
   async getTasks(
     getTaskFilterDto: GetTasksFilterDto,

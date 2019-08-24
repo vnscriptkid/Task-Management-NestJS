@@ -24,12 +24,12 @@ export class TaskRepository extends Repository<TaskEntity> {
 
   async getTasks(
     getTasksFilterDto: GetTasksFilterDto,
-    user: UserEntity,
+    userId: number,
   ): Promise<TaskEntity[]> {
     const { search, status } = getTasksFilterDto;
 
     const options: FindManyOptions = {};
-    options.where = { userId: user.id };
+    options.where = { userId };
     if (search) {
       options.where = [
         { title: Like(`%${search}%`) },

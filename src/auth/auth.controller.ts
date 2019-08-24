@@ -32,7 +32,6 @@ export class AuthController {
   @Get('test')
   @UseGuards(AuthGuard())
   test(@GetUser() user) {
-    console.log('req.user', user.username);
     return { it: 'passed' };
   }
 }

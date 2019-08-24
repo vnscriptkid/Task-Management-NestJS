@@ -21,6 +21,10 @@ describe('TasksService', () => {
   let tasksService: TasksService;
   let taskRepository;
 
+  it('should true', () => {
+    expect(1).toEqual(2);
+  });
+
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [

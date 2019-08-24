@@ -111,3 +111,8 @@
   > .mockReturnValue() -> sync function
   > .mockResolveValue() -> async function -> return a promise
   > .mockRejectedValue() -> async function
+
+### Git
+
+- Rename the last commit message
+  > git commit --amend

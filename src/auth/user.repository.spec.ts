@@ -4,6 +4,7 @@ import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import {
   ConflictException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 describe('UserRepository', () => {
@@ -42,6 +43,37 @@ describe('UserRepository', () => {
       saveMock.mockRejectedValue({});
       expect(userRepository.signUp(authCredentialsDto)).rejects.toThrow(
         InternalServerErrorException,
+      );
+    });
+  });
+
+  describe('signIn', () => {
+    let checkPasswordMock;
+    it('signIn successfully', async () => {
+      checkPasswordMock = jest.fn().mockResolvedValue(true);
+      userRepository.findOne = jest.fn().mockResolvedValue({
+        isPasswordCorrect: checkPasswordMock,
+      });
+      const result = await userRepository.signIn(authCredentialsDto);
+      expect(userRepository.findOne).toHaveBeenCalled();
+      expect(checkPasswordMock).toHaveBeenCalled();
+      expect(result).toEqual(authCredentialsDto.username);
+    });
+
+    it('signIn unsuccessfully in case user not found', async () => {
+      userRepository.findOne = jest.fn().mockResolvedValue(null);
+      expect(userRepository.signIn(authCredentialsDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+
+    it('signIn unsuccessfully in case password is not correct', async () => {
+      checkPasswordMock = jest.fn().mockResolvedValue(false);
+      userRepository.findOne = jest.fn().mockResolvedValue({
+        isPasswordCorrect: checkPasswordMock,
+      });
+      expect(userRepository.signIn(authCredentialsDto)).rejects.toThrow(
+        UnauthorizedException,
       );
     });
   });

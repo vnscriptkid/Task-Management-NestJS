@@ -106,4 +106,25 @@ describe('TasksService', () => {
       );
     });
   });
+
+  describe('updateTaskStatus', () => {
+    const taskId = 100;
+    const status = TaskStatus.IN_PROGRESS;
+    const userId = 200;
+    it('should call getTaskById to get a task, change status and save it', async () => {
+      const mockSave = jest.fn();
+      tasksService.getTaskById = jest.fn().mockResolvedValue({
+        status: TaskStatus.IN_PROGRESS,
+        save: mockSave,
+      });
+      expect(tasksService.getTaskById).not.toHaveBeenCalled();
+      const result = await tasksService.updateTaskStatus(
+        taskId,
+        status,
+        userId,
+      );
+      expect(mockSave).toHaveBeenCalled();
+      expect(result.status).toEqual(TaskStatus.IN_PROGRESS);
+    });
+  });
 });

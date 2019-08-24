@@ -101,3 +101,7 @@
 
 - Register (imports) JwtModule and PassportModule with AuthModule
 - JwtModule internally exports JwtService, so we can inject it into AuthModule for our own sake
+
+### Jest Testing
+
+- expect(fn).rejects.toThrow()

@@ -56,7 +56,6 @@ export class TasksService {
     getTaskFilterDto: GetTasksFilterDto,
     user: UserEntity,
   ): Promise<TaskEntity[]> {
-    console.log('test');
     const tasks = await this.taskRepository.getTasks(getTaskFilterDto, user.id);
     return tasks;
   }

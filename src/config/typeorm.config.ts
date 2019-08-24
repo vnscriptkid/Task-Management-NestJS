@@ -9,7 +9,7 @@ const typeOrmConfig: TypeOrmModuleOptions = {
   database: process.env.PG_DB,
   entities: [__dirname + `/../**/*.entity{.ts,.js}`],
   synchronize: true,
-  ssl: true,
+  ssl: JSON.parse(process.env.TYPEORM_SSL),
   migrationsRun: true,
   logging: true,
   logger: 'file',

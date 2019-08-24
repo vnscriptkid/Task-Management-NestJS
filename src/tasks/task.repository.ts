@@ -12,7 +12,7 @@ export class TaskRepository extends Repository<TaskEntity> {
     user: UserEntity,
   ): Promise<TaskEntity> {
     const { title, description } = createTaskDto;
-    const newTask = new TaskEntity();
+    const newTask = this.create();
     newTask.description = description;
     newTask.title = title;
     newTask.status = TaskStatus.OPEN;

@@ -14,7 +14,7 @@ const saltRounds = 10;
 export class UserRepository extends Repository<UserEntity> {
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
     const { username, password } = authCredentialsDto;
-    const newUser = new UserEntity();
+    const newUser = this.create();
     newUser.username = username;
     const salt = await genSalt(saltRounds);
     const hashedPassword = await hash(password, salt);

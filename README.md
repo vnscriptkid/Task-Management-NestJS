@@ -105,3 +105,9 @@
 ### Jest Testing
 
 - expect(fn).rejects.toThrow()
+- Make TypeORM easy to test:
+  > new UserEntity(); -> this.create()
+- jest.fn()
+  > .mockReturnValue() -> sync function
+  > .mockResolveValue() -> async function -> return a promise
+  > .mockRejectedValue() -> async function
